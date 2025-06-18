@@ -1,0 +1,128 @@
+# KCVM Default Configuration
+
+# Camera settings
+camera:
+  device: 0  # Camera device index (0 for first camera)
+  resolution: [1920, 1080]  # Camera resolution
+  fps: 30  # Frames per second
+  exposure_mode: auto  # auto, manual
+  iso: 100  # ISO value (if manual exposure)
+  shutter_speed: 10000  # Shutter speed in microseconds (if manual)
+  
+# AI/Detection settings
+detection:
+  # Screen detection
+  screen_detection:
+    enabled: true
+    method: edge_detection  # edge_detection, ai_detection
+    threshold: 0.8  # Confidence threshold for screen detection
+    min_area: 10000  # Minimum area for valid screen (pixels)
+    
+  # Cursor detection  
+  cursor_detection:
+    enabled: true
+    method: template_matching  # template_matching, ai_detection
+    confidence: 0.9  # Minimum confidence for cursor detection
+    search_region_size: 200  # Size of region to search for cursor
+    
+  # Object detection (future feature)
+  object_detection:
+    enabled: false
+    model: yolov5  # Model to use for object detection
+    
+# Performance settings
+performance:
+  use_ai_acceleration: true  # Use Hailo AI HAT for acceleration
+  target_latency_ms: 50  # Target latency in milliseconds
+  frame_skip: 0  # Skip N frames for performance (0 = no skip)
+  threading:
+    video_capture_threads: 2
+    processing_threads: 4
+    
+# Control settings
+control:
+  # Mouse settings
+  mouse:
+    sensitivity: 1.0  # Mouse movement sensitivity multiplier
+    acceleration: 1.2  # Mouse acceleration factor
+    smoothing: true  # Enable movement smoothing
+    smoothing_factor: 0.7  # Smoothing factor (0-1)
+    
+  # Click settings
+  click:
+    delay_ms: 100  # Delay between press and release
+    double_click_time_ms: 300  # Max time between clicks for double-click
+    drag_threshold_px: 5  # Minimum pixels to initiate drag
+    
+  # Keyboard settings
+  keyboard:
+    typing_delay_ms: 10  # Delay between keystrokes
+    repeat_delay_ms: 500  # Delay before key repeat
+    repeat_rate_hz: 30  # Key repeat rate
+    
+# Calibration settings
+calibration:
+  auto_calibrate: true  # Automatically calibrate on startup
+  calibration_file: calibration.json  # File to store calibration data
+  recalibrate_on_change: true  # Recalibrate if screen changes
+  
+  # Manual calibration
+  manual:
+    points: 4  # Number of calibration points
+    timeout_seconds: 30  # Timeout for manual calibration
+    
+# Input methods
+input:
+  # Gesture control
+  gesture:
+    enabled: true
+    model: mediapipe_hands  # Gesture recognition model
+    confidence: 0.7
+    gestures:
+      point: move_cursor
+      pinch: click
+      spread: right_click
+      swipe_up: scroll_up
+      swipe_down: scroll_down
+      
+  # Voice control (future feature)
+  voice:
+    enabled: false
+    language: en-US
+    wake_word: "hey kcvm"
+    
+# API settings
+api:
+  enabled: false  # Enable web API
+  host: 0.0.0.0
+  port: 8080
+  auth_required: true
+  api_key: ""  # Set your API key here
+  
+# Logging settings
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR
+  file: kcvm.log
+  max_size_mb: 10
+  backup_count: 3
+  
+# Advanced settings
+advanced:
+  # USB HID settings
+  hid:
+    mouse_device: /dev/hidg0
+    keyboard_device: /dev/hidg1
+    report_rate_hz: 125  # USB report rate
+    
+  # Video processing
+  video:
+    color_space: BGR  # Color space for processing
+    denoise: true  # Apply denoising filter
+    sharpen: false  # Apply sharpening filter
+    
+  # Debug options
+  debug:
+    show_preview: false  # Show camera preview window
+    show_detection: false  # Show detection overlays
+    save_frames: false  # Save frames for debugging
+    frame_save_path: /tmp/kcvm_frames/
