@@ -1,0 +1,18 @@
+[Unit]
+Description=KCVM Hailo Proper Web Detection
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi
+Environment="PYTHONUNBUFFERED=1"
+Environment="PYTHONPATH=/home/pi/hailo-rpi5-examples:/usr/lib/python3/dist-packages"
+ExecStart=/usr/bin/python3 /home/pi/hailo_proper_web.py
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
